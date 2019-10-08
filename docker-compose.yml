@@ -1,0 +1,21 @@
+version: '3'
+services:
+    logstash:
+        image: logstash:7.2.1
+        volumes:
+            - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+            - ./logstash/logstash.conf:/logstash/logstash.conf
+            - ./logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+        ports:
+            - 7000:7000
+
+    # kafka:
+        # image: wurstmeister/kafka:2.12-2.3.0
+        
+    filebeat:
+        image: store/elastic/filebeat:7.3.0
+        volumes:
+            - ./filebeat/logs:/logs
+            - ./filebeat/test1.yml:/usr/share/filebeat/modules.d/test1.yml
+            - ./filebeat/test2.yml:/usr/share/filebeat/modules.d/test2.yml
+            - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml

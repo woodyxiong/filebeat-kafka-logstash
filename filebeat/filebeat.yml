@@ -1,0 +1,25 @@
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+filebeat.inputs:
+- type: log
+  tags: ["test1"]
+  enabled: true
+  paths:
+    - /logs/test1/*.log
+  fields:
+    typea: test
+  fields_under_root: true
+
+- type: log
+  tags: ["test2"]
+  enabled: true
+  paths:
+    - /logs/test2/*.log
+  json.keys_under_root: true
+  json.add_error_key: true
+
+output.logstash:
+  hosts: ["logstash:7000"]
